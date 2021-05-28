@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function BasicHeader() {
+    const location = useLocation();
     return (
         <div>
             < nav className="navbar navbar-expand-lg navbar-light bg-light" >
@@ -12,17 +13,19 @@ function BasicHeader() {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
+                        <li className={location.pathname !== '/details' ? 'nav-item active' : 'nav-item'}>
                             <Link to="/" className="nav-link">Home</Link>
                         </li>
-                        <li className="nav-item">
+                        <li className={location.pathname === '/details' ? 'nav-item active' : 'nav-item'}>
                             <Link to="/details" className="nav-link">View Data</Link>
                         </li>
                     </ul>
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                    {location.pathname === '/details' ?
+                        <form className="form-inline my-2 my-lg-0">
+                            <input className="form-control mr-sm-2" type="search" placeholder="Not Active ATM" aria-label="Search" />
+                            <button className="btn btn-outline-success my-2 my-sm-0">Search</button>
+                        </form>
+                        : <span></span>}
                 </div>
             </nav>
         </div >

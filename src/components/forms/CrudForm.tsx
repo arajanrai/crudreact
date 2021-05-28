@@ -5,25 +5,32 @@ export interface UserInfoType {
     name: string | null,
     age: number | string,
     phone: string | null,
-    email: string | null
+    email: string | null,
+    id?: string
 };
+
+const initialState = { name: '', age: '', phone: '', email: '' };
 
 function CrudForm(props: any) {
 
-    const [userInfo, setUserInfo] = useState({ name: '', age: '', phone: '', email: '' } as UserInfoType);
+    const [userInfo, setUserInfo] = useState(!props.initialState ? initialState as UserInfoType : props.initialState as UserInfoType);
 
     const changeHandler = (data: { key: string, value: string | number }) => {
         setUserInfo(
             {
                 ...userInfo,
                 [data.key]: data.value
-            } as any
+            } as UserInfoType
         )
     }
 
+    const resetForm = (data: UserInfoType) => {
+        setUserInfo(data);
+    }
+
     const submitForm = () => {
-        console.log(userInfo);
         props.formHandler(userInfo);
+        resetForm(initialState);
     }
 
     return (
